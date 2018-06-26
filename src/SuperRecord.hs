@@ -315,13 +315,13 @@ type family RecAppendH (lhs ::[*]) (rhs :: [*]) (rhsall :: [*]) (accum :: [*]) :
     RecAppendH (l := t ': lhs) '[] rhsall acc = RecAppendH lhs rhsall rhsall (l := t ': acc)
     RecAppendH '[] rhs rhsall acc = ListConcat (ListReverse acc) rhsall
 
-type family RecSize (lts :: [*]) :: Nat where
+type family RecSize (lts :: [k]) :: Nat where
     RecSize '[] = 0
     RecSize (l := t ': lts) = 1 + RecSize lts
 
 type RecVecIdxPos l lts = RecSize lts - RecTyIdxH 0 l lts - 1
 
-type family RecTyIdxH (i :: Nat) (l :: Symbol) (lts :: [*]) :: Nat where
+type family RecTyIdxH (i :: Nat) (l :: Symbol) (lts :: [k]) :: Nat where
     RecTyIdxH idx l (l := t ': lts) = idx
     RecTyIdxH idx m (l := t ': lts) = RecTyIdxH (1 + idx) m lts
     RecTyIdxH idx m '[] =
@@ -330,7 +330,7 @@ type family RecTyIdxH (i :: Nat) (l :: Symbol) (lts :: [*]) :: Nat where
           ':<>: 'Text m
         )
 
-type family RecTy (l :: Symbol) (lts :: [*]) :: k where
+type family RecTy (l :: Symbol) (lts :: [k1]) :: k where
     RecTy l (l := t ': lts) = t
     RecTy q (l := t ': lts) = RecTy q lts
 
