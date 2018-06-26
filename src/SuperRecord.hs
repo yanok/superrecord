@@ -50,6 +50,7 @@ module SuperRecord
     , Rec
     , RecCopy
     , RecTyIdxH
+    , RecVecIdxPos
     , showRec, RecKeys(..), recKeys
     , RecEq(..)
     , recToValue, recToEncoding
